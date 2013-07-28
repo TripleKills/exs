@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
         android:layout_marginTop="22dp"
         android:text="TextView" />
 
@@ -19,6 +20,7 @@
         android:layout_below="@+id/query_company"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dip"
+        android:textColor="@android:color/black"
         android:ems="10" >
 
     </EditText>
@@ -30,6 +32,17 @@
         android:layout_below="@+id/query_order"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:text="Button" />
+        android:text="Button" 
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/query_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/query_query"
+        android:layout_below="@+id/query_query"
+        android:layout_marginTop="48dp"
+        android:textColor="@android:color/black"
+        android:text="TextView" />
 
 </RelativeLayout>
