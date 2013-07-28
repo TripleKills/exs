@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -176,7 +177,7 @@ public class CompanyListFragment extends SherlockFragment {
 		public int getPositionForSection(int section) {
 			for (int i = 0; i < mNicks.length; i++) {
 				String l = converterToFirstSpell(mNicks[i]).substring(0, 1);
-				char firstChar = l.toUpperCase().charAt(0);
+				char firstChar = l.toUpperCase(Locale.CHINA).charAt(0);
 				if (firstChar == section) {
 					return i;
 				}
@@ -188,7 +189,7 @@ public class CompanyListFragment extends SherlockFragment {
 		public int getSectionForPosition(int position) {
 			String l = converterToFirstSpell(mNicks[position]).substring(0, 1);
 			for (int i = 0; i < getSections().length; i++) {
-				char firstChar = l.toUpperCase().charAt(0);
+				char firstChar = l.toUpperCase(Locale.CHINA).charAt(0);
 				if (firstChar == ((String) getSections()[i]).charAt(0)) {
 					return i;
 				}
