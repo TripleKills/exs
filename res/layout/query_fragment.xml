@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/query_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/query_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/query_company"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dip"
+        android:ems="10" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/query_query"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/query_order"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Button" />
+
+</RelativeLayout>

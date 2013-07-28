@@ -1,6 +1,7 @@
 package com.yqwireless.exs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,10 @@ public class EventCenter {
 
 	public void unregist(EventListenr lsnr) {
 		_lsnrs.remove(lsnr);
+	}
+	
+	public void onEvent(String name) {
+		onEvent(name, new HashMap<String, String>());
 	}
 
 	public void onEvent(String name, Map<String, String> data) {

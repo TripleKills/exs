@@ -44,6 +44,18 @@ public class MainActivity extends SherlockFragmentActivity {
 				return "company_select";
 			}
 		});
+		EventCenter.getInstance().regist(new EventListenr() {
+			
+			@Override
+			public void onEvent(Map<String, String> _data) {
+				mPager.setCurrentItem(1);
+			}
+			
+			@Override
+			public String getName() {
+				return "jump_company_select";
+			}
+		});
 	}
 	
 	private PagerTitleStrip getPagerTitle() {
@@ -65,17 +77,21 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		@Override
 		public Fragment getItem(int arg0) {
+			Fragment fg;
+			Bundle args = new Bundle();
+			args.putString("title", NavigationHelper.getTitles()[arg0]);
 			switch(arg0) {
+			case 0:
+				fg = new QueryFragment();
+				break;
 			case 1:
-				Fragment fg = new CompanyListFragment();
-				Bundle args = new Bundle();
-				args.putString("title", NavigationHelper.getTitles()[arg0]);
-				fg.setArguments(args);
-				return fg;
+				fg = new CompanyListFragment();
+				break;
 			default:
 				return new Fragment();
 			}
-			
+			fg.setArguments(args);
+			return fg;
 		}
 
 		@Override
