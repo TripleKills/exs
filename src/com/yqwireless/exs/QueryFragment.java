@@ -14,10 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,8 +29,8 @@ public class QueryFragment extends SherlockFragment {
 	private TextView  query_result;
 	private View query_query;
 	private EditText query_order;
-	String[] oftenUsedCompanys = {"查看所有", "全峰快递", "申通e物流", "EMS快递", "顺丰速运", "圆通速递", "中通快递",
-			"如风达快递", "韵达快运", "天天快递", "汇通快运",  "德邦物流", "宅急送" };
+	String[] oftenUsedCompanys = {"顺丰速运", "申通e物流", "EMS快递", "圆通速递", "中通快递",
+			"如风达快递", "韵达快运", "天天快递", "汇通快运",  "德邦物流", "宅急送", "查看所有" };
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -42,14 +40,20 @@ public class QueryFragment extends SherlockFragment {
 		query_order = (EditText) v.findViewById(R.id.query_order);
 		query_query = v.findViewById(R.id.query_query);
 		query_result = (TextView) v.findViewById(R.id.query_result);
-		/*query_company.setOnClickListener(new OnClickListener() {
+		EventCenter.getInstance().regist(new EventListenr() {
 			
 			@Override
-			public void onClick(View arg0) {
-				EventCenter center = EventCenter.getInstance();
-				center.onEvent("jump_company_select");
+			public void onEvent(Map<String, String> _data) {
+				if (query_company.getSelectedItemPosition() == query_company.getCount() - 1) {
+					query_company.setSelection(0);
+				}
 			}
-		});*/
+			
+			@Override
+			public String getName() {
+				return "scroll_to_query";
+			}
+		});
 		EventCenter.getInstance().regist(new EventListenr() {
 			
 			@Override
@@ -62,9 +66,9 @@ public class QueryFragment extends SherlockFragment {
 						return;
 					}
 				}
-				oftenUsedCompanys[1] = company;
+				oftenUsedCompanys[0] = company;
 				query_company.postInvalidate();
-				query_company.setSelection(1);
+				query_company.setSelection(0);
 				query_company.setPrompt(company);
 			}
 			
@@ -74,19 +78,19 @@ public class QueryFragment extends SherlockFragment {
 			}
 		});
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				getActivity(), android.R.layout.simple_list_item_1,
+				getActivity(), /*android.R.layout.simple_list_item_1,*/R.layout.spinner,/*android.R.layout.simple_spinner_item,*/
 				oftenUsedCompanys);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		adapter.setNotifyOnChange(true);
 		query_company.setAdapter(adapter);
-		query_company.setSelection(4);
+		query_company.setSelection(0);
 		query_company.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				System.out.println("onItemSelected " + arg2);
-				if (arg2 == 0) {
+				if (arg2 == query_company.getCount() - 1) {
 					EventCenter center = EventCenter.getInstance();
 					center.onEvent("jump_company_select");
 				} else {
@@ -104,14 +108,6 @@ public class QueryFragment extends SherlockFragment {
 		});
 		initQueryBtn();
 		return v;
-	}
-	
-	@Override
-	public void onResume() {
-		if (query_company.getSelectedItemPosition() == 0) {
-			query_company.setSelection(4);
-		}
-		super.onResume();
 	}
 	
 	private void initQueryBtn() {

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -24,8 +25,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 		setTheme(R.style.Theme_Sherlock);
+		setContentView(R.layout.activity_main);
 		mAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
@@ -55,6 +56,21 @@ public class MainActivity extends SherlockFragmentActivity {
 			public String getName() {
 				return "jump_company_select";
 			}
+		});
+		mPager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				if (arg0 == 0) {
+					EventCenter.getInstance().onEvent("scroll_to_query");
+				}
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {}
 		});
 	}
 	
