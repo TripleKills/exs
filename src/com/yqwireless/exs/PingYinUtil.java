@@ -1,5 +1,8 @@
 package com.yqwireless.exs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -8,6 +11,12 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 public class PingYinUtil {
+	
+	private static Map<String, String> cache = new HashMap<String, String>();
+	
+	   public static void clearCache() {
+		   cache.clear();
+	   }
 	 /**
 	    * 将字符串中的中文转化为拼音,其他字符不变
 	    *
@@ -15,6 +24,8 @@ public class PingYinUtil {
 	    * @return
 	    */
 	    public static String getPingYin(String inputString) {
+	    	if (cache.get(inputString) != null)
+	    		return cache.get(inputString);
 	        HanyuPinyinOutputFormat format = new
 	        HanyuPinyinOutputFormat();
 	        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
@@ -39,6 +50,7 @@ public class PingYinUtil {
 	        } catch (BadHanyuPinyinOutputFormatCombination e) {
 	            e.printStackTrace();
 	        }
+	        cache.put(inputString, output);
 	        return output;
 	    }
 }

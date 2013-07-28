@@ -10,5 +10,4 @@ public class PinyinComparator implements Comparator{
 	     String str2 = PingYinUtil.getPingYin((String) o2);
 	     return str1.compareTo(str2);
 	}
-
 }

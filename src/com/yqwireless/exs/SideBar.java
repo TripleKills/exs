@@ -99,6 +99,8 @@ public class SideBar extends View {
 	}
 
 	protected void onDraw(Canvas canvas) {
+		if (null == list)
+			return;
 		m_nItemHeight = (int)(list.getHeight() / 26);
 		paint.setColor(0xff595c61);
 		paint.setAntiAlias(true);
