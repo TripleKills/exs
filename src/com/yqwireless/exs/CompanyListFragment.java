@@ -3,8 +3,10 @@ package com.yqwireless.exs;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -18,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -97,6 +101,17 @@ public class CompanyListFragment extends SherlockFragment {
 								PixelFormat.TRANSLUCENT);
 						mWindowManager.addView(mDialogText, lp);
 						indexBar.setTextView(mDialogText);
+						lvContact.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> arg0,
+									View arg1, int arg2, long arg3) {
+								EventCenter center = EventCenter.getInstance();
+								Map<String, String> data = new HashMap<String, String>();
+								data.put("company", lvContact.getAdapter().getItem(arg2).toString());
+								center.onEvent("company_select", data);
+							}
+						});
 					}
 				};
 				getActivity().runOnUiThread(r);

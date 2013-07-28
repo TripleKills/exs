@@ -1,5 +1,7 @@
 package com.yqwireless.exs;
 
+import java.util.Map;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.yqwireless.exs.EventCenter.EventListenr;
 
 public class MainActivity extends SherlockFragmentActivity {
 	ViewPager mPager;
@@ -26,6 +30,20 @@ public class MainActivity extends SherlockFragmentActivity {
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		mPager.addView(getPagerTitle());
+		EventCenter.getInstance().regist(new EventListenr() {
+			
+			@Override
+			public void onEvent(Map<String, String> _data) {
+				String company = _data.get("company");
+				Toast.makeText(MainActivity.this, company, Toast.LENGTH_LONG).show();
+				mPager.setCurrentItem(0);
+			}
+			
+			@Override
+			public String getName() {
+				return "company_select";
+			}
+		});
 	}
 	
 	private PagerTitleStrip getPagerTitle() {
