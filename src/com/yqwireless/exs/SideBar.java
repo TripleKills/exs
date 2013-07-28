@@ -106,7 +106,6 @@ public class SideBar extends View {
 		paint.setTextAlign(Paint.Align.CENTER);
 		float widthCenter = getMeasuredWidth() / 2;
 		for (int i = 0; i < l.length; i++) {
-			System.out.println("current_position: " + current_position + ", i " + i);
 			if (i == current_position) {
 				paint.setColor(list.getResources().getColor(android.R.color.white));
 			}

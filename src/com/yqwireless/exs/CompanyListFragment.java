@@ -1,6 +1,9 @@
 package com.yqwireless.exs;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -32,10 +35,50 @@ public class CompanyListFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		 copyDB();
+		DBOperate dao = new DBOperate(getActivity());
+		long start = System.currentTimeMillis();
+		List<String> companys = dao.getAllCompany();
+		System.out.println("companys size is " + companys.size());
+		long cost = System.currentTimeMillis() - start;
+		System.out.println("get companys cost is " + cost);
+		start = System.currentTimeMillis();
+		nicks = new String[companys.size()];
+		for (int i = 0; i < companys.size(); i++)
+			nicks[i] = companys.get(i);
+		cost = System.currentTimeMillis() - start;
+		System.out.println("nicks cost is " + cost);
+		start = System.currentTimeMillis();
 		View v = inflater.inflate(R.layout.fragment_company, null);
+		cost = System.currentTimeMillis() - start;
+		System.out.println("inflate cost is " + cost);
 		mWindowManager = (WindowManager)getActivity().getSystemService(Context.WINDOW_SERVICE);
+		cost = System.currentTimeMillis() - start;
+		System.out.println("mWindowManager cost is " + cost);
 		findView(v);
+		cost = System.currentTimeMillis() - start;
+		System.out.println("findView cost is " + cost);
 		return v;
+	}
+	
+	private void copyDB() {
+		long start = System.currentTimeMillis();
+		String dbDir = "data/data/" + getActivity().getPackageName() + "/databases";
+		File dir = new File(dbDir);
+		if (!dir.exists() || !dir.isDirectory()) {
+			dir.mkdir();
+		}
+		File dbFile = new File(dir, "company.db");
+		if (!dbFile.exists()) {
+			try {
+				FileUtil.loadDBFile(R.raw.company, getResources(), dbFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		long cost = System.currentTimeMillis() - start;
+		System.out.println("copy db cost is " + cost);
 	}
 	
 	 private void findView(View v){

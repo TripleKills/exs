@@ -47,11 +47,17 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		@Override
 		public Fragment getItem(int arg0) {
-			Fragment fg = new CompanyListFragment();
-			Bundle args = new Bundle();
-			args.putString("title", NavigationHelper.getTitles()[arg0]);
-			fg.setArguments(args);
-			return fg;
+			switch(arg0) {
+			case 1:
+				Fragment fg = new CompanyListFragment();
+				Bundle args = new Bundle();
+				args.putString("title", NavigationHelper.getTitles()[arg0]);
+				fg.setArguments(args);
+				return fg;
+			default:
+				return new Fragment();
+			}
+			
 		}
 
 		@Override
